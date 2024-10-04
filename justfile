@@ -38,7 +38,7 @@ deps-get:
     mix deps.get
 
 deps-update:
-    mix deps.update surface_form
+    mix deps.update --all
 
 common-mix-tasks-setup: deps-get
     mkdir -p lib/mix/

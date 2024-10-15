@@ -34,6 +34,12 @@ clean:
     mix deps.clean --all
     rm -rf .hex .mix .cache lib/mix
 
+boilerplate-update:
+    mkdir -p .bonfire-extension-boilerplate
+    git clone https://github.com/bonfire-networks/bonfire-extension-boilerplate.git --branch main --single-branch .bonfire-extension-boilerplate
+    cd .bonfire-extension-boilerplate && cp .envrc justfile .. && cp .github/workflows/main.yml ../.github/workflows/main.yml && cp lib/mix/mess.ex ../mess.exs
+    rm -rf .bonfire-extension-boilerplate
+
 deps-get:
     mix deps.get
 

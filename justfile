@@ -13,8 +13,8 @@ DB_DOCKER_VERSION := env_var_or_default('DB_DOCKER_VERSION', "16-3.4")
 DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" { "ghcr.io/baosystems/postgis:"+DB_DOCKER_VERSION } else { "postgis/postgis:"+DB_DOCKER_VERSION+"-alpine" })
 export MIX_ENV := "test"
 export POSTGRES_PASSWORD := "postgres"
-export POSTGRES_PORT := "5432"
-export POSTGRES_DB := "localhost:${POSTGRES_PORT}"
+POSTGRES_PORT := "5432"
+export POSTGRES_DB := "localhost:" + POSTGRES_PORT
 
 ## Configure just
 # choose shell for running recipes
@@ -65,7 +65,7 @@ create-test-db:
     mix ecto.create -r Bonfire.Common.Repo
 
 start-test-db:
-    docker run --name test-db -d -p "${POSTGRES_PORT}:5432" -e POSTGRES_PASSWORD --rm ${DB_DOCKER_IMAGE}
+    docker run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_PASSWORD --rm ${DB_DOCKER_IMAGE}
 
 stop-test-db:
     docker rm -f test-db

@@ -13,6 +13,8 @@ DB_DOCKER_VERSION := env_var_or_default('DB_DOCKER_VERSION', "16-3.4")
 DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" { "ghcr.io/baosystems/postgis:"+DB_DOCKER_VERSION } else { "postgis/postgis:"+DB_DOCKER_VERSION+"-alpine" })
 export MIX_ENV := "test"
 export POSTGRES_PASSWORD := "postgres"
+export POSTGRES_PORT := "5432"
+export POSTGRES_DB := "localhost:${POSTGRES_PORT}"
 
 ## Configure just
 # choose shell for running recipes
@@ -32,7 +34,7 @@ compile:
 
 clean:
     mix deps.clean --all
-    rm -rf .hex .mix .cache _build deps
+    rm -rf .hex .mix .cache _build deps lib/mix/tasks
 
 boilerplate-update:
     mkdir -p .bonfire-extension-boilerplate
@@ -46,7 +48,7 @@ deps-get:
 deps-update:
     mix deps.update --all
 
-common-mix-tasks-setup: deps-get
+common-mix-tasks-setup:
     cd lib/mix/ && ([ -d ../../deps/bonfire_common/lib/mix_tasks ] && ln -sf ../../deps/bonfire_common/lib/mix_tasks tasks || ln -sf ../mix_tasks tasks) && cd -
     cd lib/mix/tasks/release/ && MIX_ENV=prod mix escript.build && cd -
 
@@ -63,7 +65,7 @@ create-test-db:
     mix ecto.create -r Bonfire.Common.Repo
 
 start-test-db:
-    docker run --name test-db -d -p "5432:5432" -e POSTGRES_PASSWORD --rm ${DB_DOCKER_IMAGE}
+    docker run --name test-db -d -p "${POSTGRES_PORT}:5432" -e POSTGRES_PASSWORD --rm ${DB_DOCKER_IMAGE}
 
 stop-test-db:
     docker rm -f test-db

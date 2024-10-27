@@ -27,7 +27,7 @@ help:
     @echo "Just commands:"
     @just --list
 
-compile: deps-get
+compile:
     mix compile
 
 clean:

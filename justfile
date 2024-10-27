@@ -65,7 +65,7 @@ create-test-db:
     mix ecto.create -r Bonfire.Common.Repo
 
 start-test-db:
-    docker run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_PASSWORD --rm ${DB_DOCKER_IMAGE}
+    docker run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --rm ${DB_DOCKER_IMAGE}
 
 stop-test-db:
     docker rm -f test-db

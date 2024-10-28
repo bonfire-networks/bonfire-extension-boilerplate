@@ -37,9 +37,11 @@ help:
 compile:
     mix compile
 
-clean:
+clean: stop-test-db clean-symlinks
     mix deps.clean --all
     rm -rf .hex .mix .cache _build deps
+
+clean-symlinks:
     find lib/ -type l -delete
 
 boilerplate-update:

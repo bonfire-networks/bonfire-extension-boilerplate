@@ -21,4 +21,4 @@ jobs:
     - name: Run tests
       uses: bonfire-networks/bonfire-extension-ci-action@latest
       with:
-        db-startup-time: 30
+        db-startup-time: 45

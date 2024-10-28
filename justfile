@@ -11,7 +11,7 @@ set export
 APP_VSN_EXTRA := ""
 DB_DOCKER_VERSION := env_var_or_default('DB_DOCKER_VERSION', "16-3.4")
 DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" { "ghcr.io/baosystems/postgis:"+DB_DOCKER_VERSION } else { "postgis/postgis:"+DB_DOCKER_VERSION+"-alpine" })
-DB_STARTUP_TIME := 10
+DB_STARTUP_TIME := "10"
 export MIX_ENV := "test"
 export POSTGRES_PASSWORD := "postgres"
 POSTGRES_PORT := "5432"

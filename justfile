@@ -64,10 +64,10 @@ ext-migrations-copy: common-mix-tasks-setup
     mkdir -p priv/repo
     mix bonfire.extension.copy_migrations --to priv/repo/migrations --repo Bonfire.Common.Repo --force
 
-run-tests:
-    mix test
+run-tests args:
+    mix test {{args}}
 
-test: start-test-db ext-migrations-copy create-test-db run-tests
+test args: start-test-db ext-migrations-copy create-test-db (run-tests args)
 
 create-test-db:
     mix ecto.create -r Bonfire.Common.Repo

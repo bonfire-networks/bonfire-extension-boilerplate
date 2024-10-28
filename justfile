@@ -17,7 +17,8 @@ DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" 
 DB_STARTUP_TIME := env_var_or_default("DB_STARTUP_TIME", "30")
 POSTGRES_PORT := env_var_or_default("POSTGRES_PORT", "5432")
 export MIX_ENV := env_var_or_default("MIX_ENV", "test")
-export POSTGRES_PASSWORD := "postgres"
+export POSTGRES_USER := env_var_or_default("POSTGRES_USER", "postgres")
+export POSTGRES_PASSWORD := env_var_or_default("POSTGRES_PASSWORD", "postgres")
 export POSTGRES_DB := "localhost:" + POSTGRES_PORT
 
 ## Configure just
@@ -70,7 +71,7 @@ create-test-db:
     mix ecto.create -r Bonfire.Common.Repo
 
 start-test-db:
-    docker run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --rm ${DB_DOCKER_IMAGE}
+    docker run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --rm ${DB_DOCKER_IMAGE}
     # Let the db start
     sleep {{DB_STARTUP_TIME}}
 

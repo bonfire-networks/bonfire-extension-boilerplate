@@ -1,6 +1,9 @@
 # recipes for the `just` command runner: https://just.systems
 # how to install: https://github.com/casey/just#packages
 
+# the central source of truth for Bonfire extension project boilerplate
+# is tracked at https://github.com/bonfire-networks/bonfire-extension-boilerplate
+
 # we load all vars from .env file into the env of just commands
 set dotenv-load
 # and export just vars as env vars
@@ -8,18 +11,18 @@ set export
 
 ## Main configs - override these using env vars
 
-APP_VSN_EXTRA := ""
+APP_VSN_EXTRA := env_var_or_default("APP_VSN_EXTRA", "")
 DB_DOCKER_VERSION := env_var_or_default('DB_DOCKER_VERSION', "16-3.4")
 DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" { "ghcr.io/baosystems/postgis:"+DB_DOCKER_VERSION } else { "postgis/postgis:"+DB_DOCKER_VERSION+"-alpine" })
 DB_STARTUP_TIME := env_var_or_default("DB_STARTUP_TIME", "20")
-export MIX_ENV := "test"
+POSTGRES_PORT := env_var_or_default("POSTGRES_PORT", "5432")
+export MIX_ENV := env_var_or_default("MIX_ENV", "test")
 export POSTGRES_PASSWORD := "postgres"
-POSTGRES_PORT := "5432"
 export POSTGRES_DB := "localhost:" + POSTGRES_PORT
 
 ## Configure just
 # choose shell for running recipes
-set shell := ["bash", "-uc"]
+set shell := ["bash", "-uec"]
 # support args like $1, $2, etc, and $@ for all args
 set positional-arguments
 

@@ -34,7 +34,8 @@ compile:
 
 clean:
     mix deps.clean --all
-    rm -rf .hex .mix .cache _build deps lib/mix/tasks
+    rm -rf .hex .mix .cache _build deps
+    find lib/ -type l -delete
 
 boilerplate-update:
     mkdir -p .bonfire-extension-boilerplate
@@ -62,6 +63,8 @@ run-tests:
 test: start-test-db ext-migrations-copy create-test-db run-tests
 
 create-test-db:
+    # Let the db start
+    sleep 5
     mix ecto.create -r Bonfire.Common.Repo
 
 start-test-db:

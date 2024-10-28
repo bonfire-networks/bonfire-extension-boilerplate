@@ -16,14 +16,9 @@ jobs:
 
     name: Build and test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        elixir-version: ['1.17.3']
-        otp-version: ['27.1']
 
     steps:
     - name: Run tests
       uses: bonfire-networks/bonfire-extension-ci-action@latest
       with:
-        elixir-version: ${{ matrix.elixir-version }}
-        otp-version: ${{ matrix.otp-version }}
+        db-startup-time: 30

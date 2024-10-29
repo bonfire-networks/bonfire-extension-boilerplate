@@ -87,7 +87,7 @@ stop-test-db:
     lib/mix/tasks/release/release ./ {{APP_VSN_EXTRA}}
 
 release: release-increment
-   version="$(grep -E 'version: \"(.*)\",' mix.exs | sed -E 's/^.*version: \"(.*)\",$/\1/')"; git commit -m "Release v${version}" && git tag "v${version}"
+   version="$(grep -E 'version: \"(.*)\",' mix.exs | sed -E 's/^.*version: \"(.*)\",$/\1/')"; git add mix.exs && git commit -m "Release v${version}" && git tag "v${version}"
 
 push-release: release
     git push

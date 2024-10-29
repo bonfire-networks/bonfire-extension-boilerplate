@@ -53,8 +53,8 @@ boilerplate-update:
 deps-get:
     mix deps.get
 
-deps-update:
-    mix deps.update --all
+deps-update +FLAGS='--all':
+    mix deps.update {{FLAGS}}
 
 common-mix-tasks-setup:
     cd lib/mix/ && ([ -d ../../deps/bonfire_common/lib/mix_tasks ] && ln -sf ../../deps/bonfire_common/lib/mix_tasks tasks || ln -sf ../mix_tasks tasks) && cd -

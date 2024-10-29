@@ -16,10 +16,10 @@ DB_DOCKER_VERSION := env_var_or_default('DB_DOCKER_VERSION', "17-3.5")
 DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" { "ghcr.io/baosystems/postgis:"+DB_DOCKER_VERSION } else { "postgis/postgis:"+DB_DOCKER_VERSION+"-alpine" })
 DB_STARTUP_TIME := env_var_or_default("DB_STARTUP_TIME", "10")
 POSTGRES_PORT := env_var_or_default("POSTGRES_PORT", "5432")
-export MIX_ENV := env_var_or_default("MIX_ENV", "test")
-export POSTGRES_USER := env_var_or_default("POSTGRES_USER", "postgres")
-export POSTGRES_PASSWORD := env_var_or_default("POSTGRES_PASSWORD", "postgres")
-export POSTGRES_DB := "localhost:" + POSTGRES_PORT
+MIX_ENV := env_var_or_default("MIX_ENV", "test")
+POSTGRES_USER := env_var_or_default("POSTGRES_USER", "postgres")
+POSTGRES_PASSWORD := env_var_or_default("POSTGRES_PASSWORD", "postgres")
+POSTGRES_DB := env_var_or_default("POSTGRES_DB", "localhost:" + POSTGRES_PORT)
 
 ## Configure just
 # choose shell for running recipes

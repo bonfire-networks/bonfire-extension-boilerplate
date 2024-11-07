@@ -45,7 +45,7 @@ clean-symlinks:
     find lib/ -type l -delete
 
 boilerplate-update:
-    mkdir -p .bonfire-extension-boilerplate
+    mkdir -p .bonfire-extension-boilerplate .github/workflows
     git clone https://github.com/bonfire-networks/bonfire-extension-boilerplate.git --branch main --single-branch .bonfire-extension-boilerplate
     cd .bonfire-extension-boilerplate && cp .envrc justfile .gitignore .. && cp .github/workflows/main.yml ../.github/workflows/main.yml && cp lib/mix/mess.ex ../mess.exs
     rm -rf .bonfire-extension-boilerplate

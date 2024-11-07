@@ -70,9 +70,9 @@ deps-update +FLAGS='--all':
       ln -sf ../mix_tasks tasks
     fi
 
-    cd lib/mix/tasks/release
-    export MIX_ENV=prod
-    mix escript.build
+    cd tasks/release
+
+    MIX_ENV=prod mix escript.build
 
 ext-migrations-copy: common-mix-tasks-setup
     mkdir -p priv/repo

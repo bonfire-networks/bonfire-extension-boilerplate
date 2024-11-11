@@ -88,7 +88,7 @@ test *args: setup-db (run-tests args)
     #!/usr/bin/env bash
     set -eu
     if [ "$DB_TESTS" = "1" ]; then
-      @just start-test-db ext-migrations-copy create-test-db
+      just --justfile {{justfile()}} start-test-db ext-migrations-copy create-test-db
     fi
 
 create-test-db:

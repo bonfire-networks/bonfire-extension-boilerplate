@@ -72,11 +72,12 @@ jobs:
       run: sudo apt install just
       shell: bash
 
+    - name: Dynalizer
+      run: just dynalizer --format github
+
     - name: Lint
       run: just lint
 
-    - name: Dynalizer
-      run: just dynalizer --format github
 
   test:
     name: Build and test

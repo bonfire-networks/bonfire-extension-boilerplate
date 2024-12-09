@@ -35,6 +35,14 @@ help:
     @echo "Just commands:"
     @just --list
 
+check-unused:
+    mix deps.unlock --check-unused
+
+check-formatted:
+    mix format --check-formatted
+
+lint: check-unused check-formatted
+
 compile:
     mix compile
 

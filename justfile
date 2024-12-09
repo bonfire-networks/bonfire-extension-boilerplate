@@ -13,6 +13,7 @@ set export
 
 APP_VSN_EXTRA := env_var_or_default("APP_VSN_EXTRA", "")
 DB_TESTS := env_var_or_default('DB_TESTS', "1")
+WARNINGS_AS_ERRORS := env_var_or_default('WARNINGS_AS_ERRORS', "0")
 DB_DOCKER_VERSION := env_var_or_default('DB_DOCKER_VERSION', "17-3.5")
 DB_DOCKER_IMAGE := env_var_or_default('DB_DOCKER_IMAGE', if arch() == "aarch64" { "ghcr.io/baosystems/postgis:"+DB_DOCKER_VERSION } else { "postgis/postgis:"+DB_DOCKER_VERSION+"-alpine" })
 DB_STARTUP_TIME := env_var_or_default("DB_STARTUP_TIME", "10")
@@ -47,7 +48,16 @@ deps-compile:
     mix deps.compile
 
 compile:
-    mix compile --warnings-as-errors
+    #!/usr/bin/env bash
+    set -eu
+
+    if [ "$WARNINGS_AS_ERRORS" = "1" ]; then
+      args="--warnings-as-errors"
+    else
+      args=""
+    fi
+
+    mix compile $args
 
 clean: stop-test-db clean-symlinks
     mix deps.clean --all

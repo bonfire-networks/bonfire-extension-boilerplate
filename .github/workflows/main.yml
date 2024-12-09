@@ -58,8 +58,8 @@ jobs:
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
-        elixir-version: ${{ matrix.elixir }}
-        otp-version: ${{ matrix.otp }}
+        elixir-version: ${{ matrix.pair.elixir }}
+        otp-version: ${{ matrix.pair.otp }}
 
     - name: Add Prebuilt-MPR Repository
       run: |
@@ -101,5 +101,5 @@ jobs:
     - name: Run tests
       uses: bonfire-networks/bonfire-extension-ci-action@latest
       with:
-        elixir-version: ${{ matrix.elixir }}
-        otp-version: ${{ matrix.otp }}
+        elixir-version: ${{ matrix.pair.elixir }}
+        otp-version: ${{ matrix.pair.otp }}

@@ -43,8 +43,11 @@ check-formatted:
 
 lint: check-unused check-formatted
 
+deps-compile:
+    mix deps.compile
+
 compile:
-    mix compile
+    mix compile --warnings-as-errors
 
 clean: stop-test-db clean-symlinks
     mix deps.clean --all

@@ -75,6 +75,9 @@ jobs:
     - name: Lint
       run: just lint
 
+    - name: Dynalizer
+      run: just dynalizer --format github
+
   test:
     name: Build and test
     runs-on: ubuntu-latest

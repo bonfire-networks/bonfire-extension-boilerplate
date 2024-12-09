@@ -44,6 +44,9 @@ check-formatted:
 
 lint: check-unused check-formatted
 
+dynalizer *args:
+    mix dynalizer {{args}}
+
 deps-compile:
     mix deps.compile
 

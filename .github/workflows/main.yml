@@ -72,6 +72,9 @@ jobs:
       run: sudo apt install just
       shell: bash
 
+    - name: Setup deps
+      run: just deps-get deps-compile
+
     - name: Dynalizer
       run: just dynalizer --format github
 

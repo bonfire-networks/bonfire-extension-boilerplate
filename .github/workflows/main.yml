@@ -37,7 +37,30 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+         # the following can be uncommented if viable resource-wise
+         # - pair: # Test very old Elixir and Erlang
+         #     elixir: "1.14"
+         #     otp: "25"
+         # - pair: # Test Erlang without -doc attribute support
+         #     elixir: "1.16"
+         #     otp: "26"
+          - pair: # Test Erlang with -doc attribute support
+              elixir: "1.17"
+              otp: "27"
+
     steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: ${{ matrix.elixir }}
+        otp-version: ${{ matrix.otp }}
+
     - name: Add Prebuilt-MPR Repository
       run: |
         wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor | sudo tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg 1> /dev/null
@@ -53,10 +76,27 @@ jobs:
       run: just lint
 
   test:
-
     name: Build and test
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+         # the following can be uncommented if viable resource-wise
+         # - pair: # Test very old Elixir and Erlang
+         #     elixir: "1.14"
+         #     otp: "25"
+         # - pair: # Test Erlang without -doc attribute support
+         #     elixir: "1.16"
+         #     otp: "26"
+          - pair: # Test Erlang with -doc attribute support
+              elixir: "1.17"
+              otp: "27"
 
     steps:
     - name: Run tests
       uses: bonfire-networks/bonfire-extension-ci-action@latest
+      with:
+        elixir-version: ${{ matrix.elixir }}
+        otp-version: ${{ matrix.otp }}

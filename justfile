@@ -44,8 +44,8 @@ check-formatted:
 
 lint: check-unused check-formatted
 
-dynalizer *args:
-    mix dynalizer {{args}}
+dialyzer *args:
+    mix dialyzer {{args}}
 
 deps-compile:
     mix deps.compile

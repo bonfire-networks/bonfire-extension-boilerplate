@@ -22,6 +22,13 @@ MIX_ENV := env_var_or_default("MIX_ENV", "test")
 POSTGRES_USER := env_var_or_default("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD := env_var_or_default("POSTGRES_PASSWORD", "postgres")
 POSTGRES_DB := env_var_or_default("POSTGRES_DB", "localhost:" + POSTGRES_PORT)
+OCI_RUNTIME := if `which docker` =~ 'docker' {
+    "docker"
+} else if `which podman` =~ "podman" {
+  "podman"
+} else {
+  ""
+}
 
 ## Configure just
 # choose shell for running recipes
@@ -119,12 +126,12 @@ create-test-db:
     mix ecto.create -r Bonfire.Common.Repo
 
 start-test-db:
-    docker run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --rm ${DB_DOCKER_IMAGE}
+    {{OCI_RUNTIME}} run --name test-db -d -p {{POSTGRES_PORT}}:5432 -e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --rm ${DB_DOCKER_IMAGE}
     # Let the db start
     sleep {{DB_STARTUP_TIME}}
 
 stop-test-db:
-    docker rm -f test-db
+    {{OCI_RUNTIME}} rm -f test-db
 
 @release-increment: common-mix-tasks-setup
     #!/usr/bin/env bash

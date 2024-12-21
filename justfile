@@ -22,9 +22,9 @@ MIX_ENV := env_var_or_default("MIX_ENV", "test")
 POSTGRES_USER := env_var_or_default("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD := env_var_or_default("POSTGRES_PASSWORD", "postgres")
 POSTGRES_DB := env_var_or_default("POSTGRES_DB", "localhost:" + POSTGRES_PORT)
-OCI_RUNTIME := if `which docker` =~ 'docker' {
+OCI_RUNTIME := if `command -v docker || true` =~ 'docker' {
     "docker"
-} else if `which podman` =~ "podman" {
+} else if `command -v podman || true` =~ "podman" {
   "podman"
 } else {
   ""

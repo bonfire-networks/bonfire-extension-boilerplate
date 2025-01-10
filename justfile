@@ -77,6 +77,7 @@ clean-symlinks:
     find lib/ -type l -delete
 
 boilerplate-update:
+    rm -rf .bonfire-extension-boilerplate
     mkdir -p .bonfire-extension-boilerplate .github/workflows
     git clone https://github.com/bonfire-networks/bonfire-extension-boilerplate.git --branch main --single-branch .bonfire-extension-boilerplate
     cp -f .bonfire-extension-boilerplate/justfile justfile

@@ -79,8 +79,12 @@ clean-symlinks:
 boilerplate-update:
     mkdir -p .bonfire-extension-boilerplate .github/workflows
     git clone https://github.com/bonfire-networks/bonfire-extension-boilerplate.git --branch main --single-branch .bonfire-extension-boilerplate
-    cd .bonfire-extension-boilerplate && cp -Rfv * .. 
+    cp -f .bonfire-extension-boilerplate/justfile justfile
+    just _copy_boilerplate-update
     rm -rf .bonfire-extension-boilerplate
+
+_copy_boilerplate-update:
+    cd .bonfire-extension-boilerplate && cp -Rfv * .. 
 
 deps-get:
     mix deps.get
